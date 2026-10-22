@@ -630,8 +630,8 @@ const CONFIG = {
   PRICE: "R$ 14,90",                 // preço exibido na tela de compra
   PRICE_NOTE: "pagamento único, acesso para sempre",
   BUY_URL: "",                       // link do produto na Kiwify/Hotmart
-  SITE: "",                          // link público do jogo, vai no texto de compartilhar
-  CODES: ["xk1tj51q0qvi3"],          // códigos de ativação (guardados em forma embaralhada)
+  SITE: "https://mauricioaugustoedf.github.io/Crime-oculto/",                          // link público do jogo, vai no texto de compartilhar
+  CODES: ["xk1tj51q0qvi3","1qmyzk61ssv6iu"],          // códigos de ativação (guardados em forma embaralhada)
   PREMIUM_COINS: 150,
 };
 const FREE_CLASSIC = 3;              // casos clássicos grátis
@@ -1082,6 +1082,16 @@ function sheet(html,bind,dismiss=true){
 function closeSheet(){ layer.innerHTML=""; }
 let tt; function toast(m){ clearTimeout(tt); let t=document.querySelector(".toast"); if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t);} t.textContent=m; tt=setTimeout(()=>t.remove(),2600); }
 
+/* ativação automática pelo link de entrega: ...?codigo=XXXX */
+function autoActivate(){ try{
+  const u=new URL(location.href), raw=u.searchParams.get("codigo"); if(!raw) return;
+  u.searchParams.delete("codigo"); history.replaceState(null,"",u.pathname+(u.search||"")+u.hash);
+  const v=raw.toUpperCase().replace(/[^A-Z0-9]/g,"");
+  if(store.premium){ setTimeout(()=>toast("Seu Premium já está ativo."),400); return; }
+  if(v&&CONFIG.CODES.includes(codeHash(v))){ store.premium=true; store.coins+=CONFIG.PREMIUM_COINS; save(); setTimeout(()=>toast("Premium ativado. Bom trabalho, detetive."),400); }
+  else setTimeout(()=>toast("Código inválido. Digite em: Já comprei: ativar código."),400);
+}catch(e){} }
+autoActivate();
 home(); if(!store.tut) tutorial(0);
 </script>
 
