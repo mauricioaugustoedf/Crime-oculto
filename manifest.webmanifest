@@ -19,5 +19,7 @@
       "type": "image/png",
       "purpose": "any"
     }
-  ]
+  ],
+  "id": "./",
+  "description": "Jogo de dedução: descubra quem ficou a sós com a vítima."
 }
