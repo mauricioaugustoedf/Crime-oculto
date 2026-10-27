@@ -644,6 +644,7 @@ const CONFIG = {
   SITE: "https://mauricioaugustoedf.github.io/Crime-oculto/",                          // link público do jogo, vai no texto de compartilhar
   CODES: ["xk1tj51q0qvi3","1qmyzk61ssv6iu","7bz8yi80t1mu"],          // códigos de ativação (guardados em forma embaralhada)
   PREMIUM_COINS: 150,
+  SUPPORT: "crimeoculto.jogo@gmail.com", // e-mail de suporte
 };
 const FREE_CLASSIC = 5;              // casos clássicos grátis
 const LAUNCH = "2026-10-19";         // dia do caso do dia #1
@@ -740,7 +741,7 @@ function home(){
   ${archive.length?`<h3 class="sec">Arquivo do caso do dia <span class="secn">${store.premium?"Últimos 14 dias":"Premium"}</span></h3>
   <div class="cases">${archive.map(s=>caseRow("d"+s,"#"+dayNum(s),"#3a6f8f",null,`${niceDate(s)} · ${dailySize(s)}×${dailySize(s)}`)).join("")}</div>`:""}
 
-  <div class="foot">${store.premium?`<span class="okp">${I.check}Premium ativo</span>`:`<button class="lnk" id="code">Já comprei: ativar código</button>`}<button class="lnk" id="dzl">Tenho um dossiê</button><button class="lnk" id="how">Como jogar</button><button class="lnk" id="glo">Glossário de pistas</button><button class="lnk" id="inst" ${isStandalone()?"hidden":""}>Instalar no celular</button></div>`;
+  <div class="foot">${store.premium?`<span class="okp">${I.check}Premium ativo</span>`:`<button class="lnk" id="code">Já comprei: ativar código</button>`}<button class="lnk" id="dzl">Tenho um dossiê</button><a class="lnk" href="mailto:${CONFIG.SUPPORT}?subject=Ajuda%20Crime%20Oculto">Precisa de ajuda?</a><button class="lnk" id="how">Como jogar</button><button class="lnk" id="glo">Glossário de pistas</button><button class="lnk" id="inst" ${isStandalone()?"hidden":""}>Instalar no celular</button></div>`;
   app.querySelectorAll(".case").forEach(b=>b.onclick=()=>openCase(b.dataset.id));
   app.querySelector("#daily").onclick=()=>openCase(did);
   app.querySelectorAll("[data-lock]").forEach(b=>b.onclick=()=>paywall());
@@ -767,7 +768,7 @@ function paywall(focusCode){
     ${buy}
     <form class="codebox" id="cf"><label for="cfin">Já comprou? Digite o código que chegou no seu e-mail</label>
       <div class="row"><input id="cfin" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Ex.: ABCD1234"><button class="btn" type="submit">Ativar</button></div>
-      <p class="err" id="cferr" hidden>Código não reconhecido. Confira as letras e tente de novo.</p></form>
+      <p class="err" id="cferr" hidden>Código não reconhecido. Confira as letras e tente de novo. Se continuar, escreva para <a href="mailto:${CONFIG.SUPPORT}?subject=C%C3%B3digo%20Crime%20Oculto">${CONFIG.SUPPORT}</a>.</p></form>
     <button class="btn alt" id="pw0">Agora não</button>`,card=>{
     card.querySelector("#pw0").onclick=closeSheet;
     const nb=card.querySelector("#nobuy"); if(nb) nb.onclick=()=>toast("O link de compra ainda não foi configurado.");
